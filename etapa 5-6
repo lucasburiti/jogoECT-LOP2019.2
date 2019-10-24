@@ -1,0 +1,81 @@
+//Lucas Gabriel Alves Buriti de Sousa - 01B etapa 5-6
+
+var x = 50;
+var y = 50;
+var x0 = 0;
+var y0 = 30;
+var xi = 150;
+var yi = 150;
+var cont = 0;
+var xd = 0;
+var yd = 0;
+var estadoDisparo = false;
+var vidas = 3;
+var pont = 0;
+var nivel = 1;
+var raioP = 25
+var raioI = 28;
+
+
+function setup() {
+  createCanvas(500,500);
+}
+
+
+function draw() {
+  background(200);
+  
+  ellipse(x,y, 2*raioP,2*raioP);
+  
+  //Movimento do objeto
+  
+  if(keyIsDown(LEFT_ARROW) && x >= 30){
+    x -= 5;
+  }
+  if(keyIsDown(RIGHT_ARROW) && x <= 460){
+    x += 5;
+  }
+  if(keyIsDown(UP_ARROW) && y >= 30){
+    y -= 5;
+  }
+  if(keyIsDown(DOWN_ARROW) && y <= 465){
+    y += 5;
+  }
+  
+  //Disparo
+  if(keyIsDown(CONTROL) && estadoDisparo == false){
+    xd = x;
+    yd = y;
+    estadoDisparo = true;
+  }
+  if(estadoDisparo){
+    ellipse(xd,yd - 30,4,4);
+    yd -= 20
+    if(yd < 0){
+      estadoDisparo = false
+    }
+  }
+  
+  //Aproximaçao dos obstaculos
+  
+  ellipse(xi,yi,50,50)
+  if( dist(x,y,xi,yi) < raioP + raioI){
+     vidas--;
+     }
+  
+  
+  square(x0, y0, 40);
+  //Movimentação Quadrado1
+  x0 += 8;
+  if(x0 > 500){
+    x0 = -random(600);
+    y0 = random(360)
+  }
+  
+  //Pontuação
+  fill(0, 0, 0);
+  textSize(18);
+  text("Vidas:" + vidas, 10, 30);
+  text("Pontuação:" + pont, 200, 30);
+  text("Nivel:" + nivel, 400, 30);
+}
